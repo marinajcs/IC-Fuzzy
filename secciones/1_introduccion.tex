@@ -1,6 +1,66 @@
 \section{Introducción}
-Este  se enfoca en
 
-\subsubsection{Motivación y contexto}
+La calidad del ambiente interior (Indoor Environment Quatily, IEQ) es un factor relevante en la habitabilidad de edificios tanto residenciales como comerciales. Este concepto no solo abarca parámetros físicos, sino que también se enfoca en el bienestar general de los ocupantes. Los sistemas tradicionales de control no necesariamente optimizan el confort percibido, y con la proliferación de edificios inteligentes y sistemas HVAC avanzados, surge la necesidad de soluciones más centradas en el usuario.
 
-\subsubsection{Objetivos}
+En este trabajo, se realiza un estudio de un caso práctico donde se propone un controlador difuso unificado que integra diferentes aspectos de la calidad ambiental interior, para optimizar el confort del usuario mientras se reduce el consumo energético.
+
+\subsection{Motivación y contexto}
+
+La creciente preocupación por el consumo energético, que representa una proporción significativa del gasto global en edificios, junto con la demanda de entornos más cómodos y saludables, ha impulsado el desarrollo de tecnologías más avanzadas de gestión de IEQ. Los sistemas HVAC convencionales no logran responder adecuadamente a la variabilidad de las condiciones ambientales y las preferencias de los usuarios, lo que resalta la necesidad de enfoques más sofisticados.
+
+En este contexto, la lógica difusa ofrece un marco versátil para abordar la complejidad y la interrelación de múltiples parámetros ambientales. El uso de FLC permite no solo controlar eficientemente la temperatura y la humedad, sino también integrar otros factores como la calidad del aire y la iluminación, mejorando así el confort general. Este enfoque, además, facilita la implementación en sistemas ya existentes, proporcionando una capa de control más robusta y adaptativa.
+
+\begin{comment}
+	contenidos...
+	\begin{figure}[H]
+		\centering
+		\includegraphics[width=0.8\textwidth]{imgs/INE-grafica1.jpeg}
+		\caption{Población por grupos de edad que han usado Internet en los últimos tres meses (INE, 2018-23)}
+		\label{fig:grafica1-INE}
+	\end{figure}
+	
+	
+	\autoref{fig:...}
+\end{comment}
+
+
+\subsection{Objetivos}
+
+El objetivo principal de este trabajo es diseñar e implementar un sistema de control basado en lógica difusa para optimizar la calidad del ambiente interior (IEQ), integrando múltiples parámetros ambientales con el fin de maximizar el confort de los ocupantes a la vez que se minimiza el consumo energético.
+
+A partir de este objetivo principal, se pueden extraer una serie de subobjetivos que vienen recogidos en el Cuadro \ref{tab:subobjetivos}.
+
+\begin{table}[H]
+	\centering
+	\begin{tabular}{| c | p{9.6cm} |}
+		\hline
+		\rowcolor{lightgray}
+		\textbf{Subobjetivos} & \textbf{Descripción} \\
+		\hline
+		Optimización del consumo energético & 
+		Reducir el consumo energético de los sistemas HVAC mientras se mantienen niveles de adecuados de confort \vspace{0.2cm} \\
+		\hline
+		Personalización del confort &
+		Ajustar dinámicamente las condiciones ambientales de acuerdo con las preferencias y actividades de los usuarios
+		\vspace{0.2cm} \\
+		\hline
+		Integración de sensores múltiples & 
+		Utilizar datos de múltiples sensores (temperatura, humedad, CO2, iluminación) para una evaluación más completa del entorno 
+		\vspace{0.2cm} \\
+		\hline
+		Flexibilidad y escalabilidad & 
+		Diseñar un sistema de control que pueda adecuarse fácilmente a diversos entornos y condiciones operativas.
+		\vspace{0.2cm} \\
+		\hline
+		Mejora de la estabilidad del sistema & 
+		Reducir las oscilaciones en los parámetros ambientales mediante la implementación de reglas difusas más precisas.
+		\vspace{0.2cm} \\
+		\hline
+		Control predictivo y preventivo & 
+		Anticipar cambios en la calidad del ambiente interior y tomar medidas correctivas antes de que los niveles de confort se vean comprometidos.
+		\vspace{0.2cm} \\
+		\hline
+	\end{tabular}
+	\caption{Subobjetivos del trabajo.}
+	\label{tab:subobjetivos}
+\end{table}
