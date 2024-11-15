@@ -103,13 +103,87 @@ El motor de inferencia aplica el \textbf{método Mamdani max-min} para combinar 
 	\label{fig:mamdani}
 \end{figure}
 
-En la \autoref{fig:mamdani}, $x$ son las mediciones de los sensores de entrada, $\alpha_i$ es el grado en que una entrada dada satisface la condición de la $i$-ésima regla ($R_i$), y $\mu_{output_i}$ es la agregación de los conjuntos difusos de salida de todas las reglas para $output_i$.
+En la \autoref{fig:mamdani}: $x$ son las mediciones de los sensores de entrada, $\alpha_i$ es el grado en que una entrada dada satisface la condición de la $i$-ésima regla ($R_i$), y $\mu_{output_i}$, la agregación de los conjuntos difusos de salida de todas las reglas para $output_i$.
 
-\subsection{Simulación y pruebas}
+\subsection{Pruebas en simuladores y entornos reales}
 
-\subsubsection{Pruebas con el simulador}
+\subsubsection{Configuración del simulador}
 
-\subsubsection{Pruebas experimentales}
+Se desarrolló un simulador con una interfaz web para probar el controlador difuso que va a gestionar los parámetros de confort ambiental en interiores.
+
+Dicho simulador permite definir rangos de confort, ingresar valores de las condiciones actuales del ambiente (temperatura, iluminación, humedad y concentración de CO2) y obtener las acciones necesarias para mantener dichos parámetros dentro de los rangos deseados.
+
+El simulador contiene tres paneles, asociados a tres elementos distintos:
+\begin{enumerate}
+	\item \textbf{Los rangos de confort}: este panel permite definir los intervalos de confort que utilizará el controlador para sus reglas difusas. Por ejemplo, se pueden establecer valores específicos para las etiquetas ("baja", "media" y "alta") de humedad o temperatura.
+	
+	\begin{figure}[H]
+		\centering
+		\includegraphics[width=0.6\textwidth]{imgs/simulator-comfort-params.JPG}
+		\caption{Panel de definición de intervalos de comfort}
+		\label{fig:simulator-comfort-params}
+	\end{figure}
+	
+	\item \textbf{Los valores de entrada}: encargado de registrar los datos de las condiciones de interior actuales, simulando los valores que los sensores reales proporcionarían en un entorno físico real. Estas entradas corresponden a las variables que figuran en los antecedentes de las reglas difusas.
+	
+	\begin{figure}[H]
+		\centering
+		\includegraphics[width=0.6\textwidth]{imgs/simulator-panel-inputs.JPG}
+		\caption{Panel de definición de valores de entrada}
+		\label{fig:simulator-panel-inputs}
+	\end{figure}
+	
+	\item \textbf{Los valores de salida}: donde se disponen las acciones sugeridas por el controlador para ajustar el ambiente, y así poder reajustar las condiciones actuales dentro de los intervalos de confort definidos en el primer panel.
+	
+	\begin{figure}[H]
+		\centering
+		\includegraphics[width=0.6\textwidth]{imgs/simulator-actions-output.JPG}
+		\caption{Panel de definición de valores de salida}
+		\label{fig:simulator-actions-output}
+	\end{figure}
+	
+	El formato de las salidas son acciones concretas con un grado de aplicación especificado, en el supuesto de que deba aplicarse. A continuación se muestran algunos ejemplos de salidas:
+	
+	\begin{itemize}
+		\item Si la iluminación interior y exterior es baja, se sugiere activar la iluminación artificial.
+		\item Si la humedad relativa interior es del 19\%, por debajo del umbral de confort del 30\%, se recomienda activar el humidificador.
+		\item Si la temperatura interior es baja y la exterior también, se instruye cerrar las ventanas y aumentar la temperatura usando el sistema HVAC.
+	\end{itemize}
+	
+\end{enumerate}
+
+Los resultados obtenidos concuerdan con las previsiones de los expertos en energía que participaron en el proyecto. Esto demuestra que las reglas implementadas reflejan adecuadamente las estrategias recomendadas para mantener un entorno confortable en interiores. 
+
+Además, el simulador se convirtió en una herramienta útil para la mejora continua, ya que permitió a los expertos realizar ajustes y optimizaciones de manera iterativa. Pues inicialmente, se partió del conjunto de reglas definidas por los expertos, basándose en su conocimiento y experiencia previa; sin embargo, al observar los resultados generados por el simulador en distintos escenarios, pudieron identificar áreas de mejora, logrando así mejorar la precisión del controlador y su capacidad de adaptación a situaciones cambiantes. 
+
+En resumen, el simulador no solo sirvió para validar las reglas iniciales, sino que también actuó como un laboratorio virtual donde los expertos podían experimentar con diferentes configuraciones. Esto permitió un desarrollo progresivo hacia un sistema más robusto, eficiente y alineado con los objetivos de confort y sostenibilidad energética.
+
+\subsubsection{Configuración experimental}
+
+Para complementar las pruebas del simulador previamente mencionado, el controlador difuso fue sometido a una serie de tests en un entorno real, concretamente, en una habitación equipada con varios sensores.
+
+La \textbf{habitación experimental} utilizada, con unas dimensiones de 5.2m x 5.2m x 2.5m, disponía de lo siguiente:
+\begin{itemize}
+	\item Una puerta y una ventana ubicadas en posiciones opuestas.
+	\item Un sistema HVAC con calefacción, ventilación y aire acondicionado.
+	\item Dos sensores para medir la temperatura y humedad.
+\end{itemize}
+
+De esta manera, aunque no pudieron obtenerse resultados en función de todos los parámetros implicados en la IEQ debido a limitaciones técnicas, las dos variables que sí pudieron tomarse en cuenta proporcionaron resultados interesantes. 
+
+Durante el período de pruebas, la habitación permaneció completamente vacía en cuanto a muebles y ocupantes, para así poder eliminar grandes interferencias externa que pudieran alterar las mediciones. No obstante, la puerta se abrió ocasionalmente, y algunas personas ingresaron por breves periodos, lo que generó pequeñas perturbaciones que fueron consideradas en el análisis.
+
+Es importante mencionar que esta configuración, aunque ideal para controlar variables experimentales, no es representativa de un entorno habitado típico. A pesar de ello, se optó por este enfoque para modelar el comportamiento del sistema en un ambiente lo más controlado posible. En futuros experimentos, se planea introducir factores adicionales, como la presencia de personas y muebles, para evaluar el desempeño del controlador en condiciones más realistas y complejas.
+
+**Recopilación y almacenamiento de datos:**
+
+Durante el mes de diciembre, se recolectaron datos cada 15 minutos. Estas mediciones incluyeron información sobre la temperatura y la humedad dentro de la habitación, así como datos de referencia sobre las condiciones exteriores. Toda esta información se almacenó en una base de datos para su posterior análisis y comparación.
+
+**Reglas de confort difusas y manejo de actuadores:**
+
+El controlador fue configurado con un conjunto de reglas de confort difusas, diseñadas previamente por expertos, para gestionar de manera eficiente los diferentes actuadores de la habitación. En este caso, el principal foco estuvo en el sistema HVAC, que fue controlado para mantener la temperatura y la humedad dentro de los rangos de confort predefinidos. Las reglas difusas permitieron al sistema tomar decisiones basadas en las condiciones actuales del entorno, ajustando dinámicamente los niveles de temperatura y humedad.
+
+Este experimento proporcionó un valioso conjunto de datos para evaluar la eficacia del controlador difuso en comparación con métodos más tradicionales. Los resultados obtenidos ayudaron a identificar áreas de mejora y a refinar aún más las reglas de control, allanando el camino para futuras implementaciones en entornos más complejos y realistas.
 
 \subsection{Resultados del estudio}
 - resumen de resultados
