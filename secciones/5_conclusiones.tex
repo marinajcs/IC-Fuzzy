@@ -1,14 +1,58 @@
 \section{Conclusiones y trabajos futuros}
 
-En conclusión, este
+En este trabajo se presentó un controlador difuso capaz de gestionar varias variables críticas para la calidad ambiental interior de una habitación. Su principal ventaja es la integración de múltiples controles en un solo sistema, lo que permite manejar las variables de manera conjunta y considerar las interacciones entre ellas. Esto resulta indispensable para evitar conflictos entre los distintos sistemas, como la activación simultánea de dispositivos que podrían contradecirse.
+
+El desarrollo del simulador permitió configurar los rangos de confort y evaluar el desempeño del controlador antes de su aplicación en un entorno real. Al implementarse en una habitación, el sistema demostró un control eficiente de la temperatura y la humedad. Los resultados evidenciaron que, en comparación con un controlador reactivo, el controlador difuso mantiene la temperatura más estable y dentro del rango de confort.
 
 \subsection{Consecución de objetivos}
 
-Se recupera la tabla de objetivos de la sección \textit{1.2.} (Cuadro \ref{tab:subobjetivos}) para marcar aquellos que han sido alcanzados.
+Se recupera la tabla de objetivos de la sección \textit{1.2.} (Cuadro \ref{tab:subobjetivos}) para marcar aquellos que han sido alcanzados en una nueva tabla (Cuadro \ref{tab:subobjetivos-cumplidos}).
+
+En primer lugar, el controlador difuso implementado mostró una mejora significativa en la eficiencia energética del sistema HVAC. Al comparar su desempeño con un controlador reactivo, se evidenció que el FLC no solo mantenía las condiciones de confort dentro de los rangos deseados, sino que lo hacía con una mayor estabilidad y menores oscilaciones. Esto implica un uso más eficiente de los recursos energéticos, ya que se evita la activación y desactivación innecesaria de los sistemas de climatización.
+
+En relación con el segundo subobjetivo cumplido, el sistema desarrollado integró datos de diversos sensores, que permitieron una evaluación más completa del entorno, proporcionando al controlador una visión holística de las condiciones ambientales para tomar decisiones más precisas y coordinadas. Aunque el experimento en la habitación piloto se centró en temperatura y humedad, la funcionalidad para incluir más variables se validó en el simulador.
+
+Uno de los logros más destacados del controlador difuso fue la reducción de las oscilaciones en las variables ambientales. Tanto la temperatura como la humedad se mantuvieron dentro de los rangos de confort con mínimas fluctuaciones durante los periodos en que el controlador difuso estuvo activo. Esto contrasta con el comportamiento del controlador reactivo, que mostró variaciones más notorias. Esta estabilidad mejorada contribuye directamente al confort de los ocupantes y a la eficiencia operativa del sistema.
+
+\begin{table}[H]
+	\centering
+	\begin{tabular}{| c | p{6.8cm} | c |}
+		\hline
+		\rowcolor{lightgray}
+		\textbf{Subobjetivos} & \textbf{Descripción} & \textbf{Alcanzado} \\
+		\hline
+		Optimización del consumo energético & 
+		Reducir el consumo energético de los sistemas HVAC mientras se mantienen niveles de adecuados de confort & $\checkmark$ \\
+		\hline
+		Integración de sensores múltiples & 
+		Utilizar datos de múltiples sensores (temperatura, humedad, CO2, iluminación) para una evaluación más completa del entorno & $\checkmark$ \\
+		\hline
+		Mejora de la estabilidad del sistema & 
+		Reducir las oscilaciones en los parámetros ambientales mediante la implementación de reglas difusas más precisas. & $\checkmark$ \\
+		\hline
+		Flexibilidad y escalabilidad & 
+		Diseñar un sistema de control que pueda adecuarse fácilmente a diversos entornos y condiciones operativas. & $\sim$ \\
+		\hline
+		Control predictivo y preventivo & 
+		Anticipar cambios en la calidad del ambiente interior y tomar medidas correctivas antes de que los niveles de confort se vean comprometidos. & x \\
+		\hline
+		Personalización del confort &
+		Ajustar dinámicamente las condiciones ambientales de acuerdo con las preferencias y actividades de los usuarios & x \\
+		\hline
+	\end{tabular}
+	\caption{Subobjetivos cumplidos del FLC unificado.}
+	\label{tab:subobjetivos-cumplidos}
+\end{table}
 
 \subsection{Trabajos futuros}
 
-Cabe mencionar que la configuración de la habitación experimental descrita en la sección \textbf{\textit{3.3.2.}}, aunque ideal para este tipo de experimentos al permitir un mayor control sobre las variables, no es representativa de un entorno habitado típico. 
+Con respecto al subobjetivo de \textit{Flexibilidad y escalabilidad} del Cuadro \ref{tab:subobjetivos-cumplidos}, cabe mencionar que la configuración de la habitación experimental descrita en la sección \textbf{\textit{3.3.2.}}, aunque ideal para este tipo de experimentos al permitir un mayor control sobre las variables, no es representativa de un entorno habitado típico. Por ello, en futuros experimentos, se podría introducir factores adicionales, como la presencia de personas y muebles, para evaluar el desempeño del controlador en condiciones más realistas y complejas. Estos parámetros sí se consideraron en el estudio del Sistema de Inferencia Difusa de Polonia, donde las mediciones incluyeron situaciones reales, como oficinas y salas de conferencia, con ocupantes realizando actividades normales.
 
-En futuros experimentos, se podría introducir factores adicionales, como la presencia de personas y muebles, para evaluar el desempeño del controlador en condiciones más realistas y complejas.
+Asimismo, aunque las pruebas realizadas en este estudio han brindado resultados prometedores, el sistema tiene margen de mejora. El próximo paso es expandir su funcionalidad mediante la incorporación de nuevos sensores y actuadores (ampliando también el subobjetivo cumplido de \textit{Integración de sensores múltiples}), lo que permitirá controlar variables adicionales como la iluminación y la concentración de CO2, que además ya han sido evaluadas en el simulador. En pocas palabras, este estudio ha permitido establecer las bases para futuras implementación adaptada a entornos más complejos.
+
+El estudio principal se ha centrado en proponer un controlador difuso unificado, pero si se quisieran alcanzar los dos últimos subobjetivos, se podría combinar con otras ténicas, como se ha hecho en las dos estudios alternativos evaluados.
+
+Por ejemplo, para poder ajustar las condiciones ambientales en función de las preferencias y actividades de los usuarios, se puede hacer como en el estudio del Sistema de Inferencia Difuso de Polonia, que integra múltiples índices, incluidos fatiga y frescura del aire, lo que permite una evaluación más personalizada del confort en función de la percepción humana. Para profundizar todavía más, se podría optar por incluir módulos de aprendizaje automático que puedan aprender de las interacciones de los usuarios con el sistema para adaptar las reglas de confort a las preferencias individuales.
+
+Para el último subobjetivo pendiente, que consiste en anticipar cambios en la calidad ambiental y tomar medidas correctivas antes de que los niveles de confort se vean comprometidos, se puede adoptar un enfoque parecido al seguido en el segundo estudio. Este permite gran flexibilidad gracias a la optimización automática de las reglas y funciones de membresía mediante algoritmos genéticos en tiempo real, lo que lo acerca a este objetivo, ya que anticipa cambios y ajusta parámetros de manera proactiva. También podría considerarse incorporar otros módulos de predicción basados en algoritmos de machine learning para alcanzar este objetivo.
 

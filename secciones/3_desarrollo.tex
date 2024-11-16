@@ -1,12 +1,12 @@
 \section{Desarrollo}
 
-\parencite{molina2013unifying}
+En esta sección se va a proporcionar una breve descripción del caso práctico, el diseño detallado del FLC, las pruebas realizadas y los resultados obtenidos, así como las interpretaciones de los mismos. 
 
 \subsection{Descripción del caso práctico}
 
 El estudio presentado propone un controlador difuso unificado para mejorar la gestión de la calidad del ambiente interior (IEQ). Este enfoque busca superar las limitaciones de los sistemas tradicionales de control HVAC, que a menudo son incapaces de manejar de manera eficiente múltiples variables y criterios interrelacionados. 
 
-El caso práctico analizado en la publicación consiste en aplicar el controlador difuso propuesto a una habitación piloto equipada con sensores de temperatura, humedad y calidad del aire. 
+El caso práctico analizado en la publicación consiste en aplicar el controlador difuso propuesto a una habitación piloto equipada con sensores de temperatura y humedad. 
 
 \subsection{Diseño del controlador difuso}
 
@@ -41,7 +41,7 @@ El FLC se basa en un motor de inferencia, que procesa las entradas tras la fuzzi
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=0.85\textwidth]{imgs/arquitectura-FLC.JPG}
-	\caption{Arquitectura PID y controlador fuzzy}
+	\caption{Arquitectura PID y controlador fuzzy.}
 	\label{fig:arquitectura-FLC}
 \end{figure}
 
@@ -51,22 +51,24 @@ El controlador difuso procesa las entradas y determina las acciones necesarias p
 
 \vspace{0.4cm}
 
-La \textbf{base de conocimiento} del FLC incluye:
+La base de conocimiento del FLC incluye:
 \begin{enumerate}
 	\item \textbf{Funciones de membresía}: se utilizan funciones trapezoidales para describir las etiquetas lingüísticas (Bajo, Medio, Alto).
 	\begin{figure}[H]
 		\centering
 		\includegraphics[width=0.55\textwidth]{imgs/function.JPG}
-		\caption{Función de membresía}
+		\caption{Función de membresía.}
 		\label{fig:function}
 	\end{figure}
 	
-	Se explican algunas variables de la \autoref{fig:function}: $L$ puede tomar el valor de Bajo, Medio y Alto; $a$ y $d$ son los puntos extremos de la función de membresía trapezoidal; $b$ y $c$, los puntos máximos de la función de membresía trapezoidal; y $x_i$ es el $i$-ésimo sensor.
+	En la \autoref{fig:function}: $L$ puede tomar el valor de Bajo, Medio y Alto; $a$ y $d$ son los puntos extremos de la función de membresía trapezoidal; $b$ y $c$, los puntos máximos de la función de membresía trapezoidal; y $x_i$ es el $i$-ésimo sensor.
+	
+	Las Figuras \ref{fig:membership-functions-input} y \ref{fig:membership-functions-output} muestran las funciones de membresía utilizadas en el sistema de control difuso para las entradas y las salidas, respectivamente. Estas funciones son necesarias para convertir los valores numéricos de los sensores en términos lingüísticos (bajo, medio, alto) que el sistema difuso pueda interpretar y procesar.
 	
 	\begin{figure}[H]
 		\centering
 		\includegraphics[width=0.8\textwidth]{imgs/membership-functions-input.JPG}
-		\caption{Función de membresía de las variables de entrada}
+		\caption{Función de membresía de las variables de entrada.}
 		\label{fig:membership-functions-input}
 	\end{figure}
 	
@@ -88,24 +90,26 @@ La \textbf{base de conocimiento} del FLC incluye:
 	\begin{figure}[H]
 		\centering
 		\includegraphics[width=0.9\textwidth]{imgs/set-of-rules.JPG}
-		\caption{Conjunto de reglas}
+		\caption{Conjunto de reglas.}
 		\label{fig:set-of-rules}
 	\end{figure}
 	
 \end{enumerate}
 
-El motor de inferencia aplica el \textbf{método Mamdani max-min} para combinar reglas y calcular las salidas. Este método evalúa el grado en que cada regla se cumple y combina las salidas difusas.
+El motor de inferencia aplica el método \textit{Mamdani max-min} para combinar reglas y calcular las salidas. Este método evalúa el grado en que cada regla se cumple y combina las salidas difusas.
 
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=0.50\textwidth]{imgs/mamdani.JPG}
-	\caption{Método mamdani max-min}
+	\caption{Método mamdani max-min.}
 	\label{fig:mamdani}
 \end{figure}
 
 En la \autoref{fig:mamdani}: $x$ son las mediciones de los sensores de entrada, $\alpha_i$ es el grado en que una entrada dada satisface la condición de la $i$-ésima regla ($R_i$), y $\mu_{output_i}$, la agregación de los conjuntos difusos de salida de todas las reglas para $output_i$.
 
 \subsection{Pruebas en simuladores y entornos reales}
+
+Se han realizado pruebas del FLC tanto en simuladores como en entornos físicos reales.
 
 \subsubsection{Configuración del simulador}
 
@@ -120,7 +124,7 @@ El simulador contiene tres paneles, asociados a tres elementos distintos:
 	\begin{figure}[H]
 		\centering
 		\includegraphics[width=0.6\textwidth]{imgs/simulator-comfort-params.JPG}
-		\caption{Panel de definición de intervalos de comfort}
+		\caption{Panel de definición de intervalos de confort.}
 		\label{fig:simulator-comfort-params}
 	\end{figure}
 	
@@ -129,7 +133,7 @@ El simulador contiene tres paneles, asociados a tres elementos distintos:
 	\begin{figure}[H]
 		\centering
 		\includegraphics[width=0.6\textwidth]{imgs/simulator-panel-inputs.JPG}
-		\caption{Panel de definición de valores de entrada}
+		\caption{Panel de definición de valores de entrada.}
 		\label{fig:simulator-panel-inputs}
 	\end{figure}
 	
@@ -138,7 +142,7 @@ El simulador contiene tres paneles, asociados a tres elementos distintos:
 	\begin{figure}[H]
 		\centering
 		\includegraphics[width=0.6\textwidth]{imgs/simulator-actions-output.JPG}
-		\caption{Panel de definición de valores de salida}
+		\caption{Panel de definición de valores de salida.}
 		\label{fig:simulator-actions-output}
 	\end{figure}
 	
@@ -162,7 +166,7 @@ En resumen, el simulador no solo sirvió para validar las reglas iniciales, sino
 
 Para complementar las pruebas del simulador previamente mencionado, el controlador difuso fue sometido a una serie de tests en un entorno real, concretamente, en una habitación equipada con varios sensores.
 
-La \textbf{habitación experimental} utilizada, con unas dimensiones de 5.2m x 5.2m x 2.5m, tenía las siguientes características:
+La habitación experimental utilizada, con unas dimensiones de 5.2m x 5.2m x 2.5m, tenía las siguientes características:
 \begin{itemize}
 	\item Una puerta y una ventana ubicadas en posiciones opuestas.
 	\item Un sistema HVAC con calefacción, ventilación y aire acondicionado.
@@ -176,7 +180,7 @@ La \textbf{habitación experimental} utilizada, con unas dimensiones de 5.2m x 5
 
 \vspace{0.4cm}
 
-En cuanto a la \textbf{recopilación y almacenamiento de datos}, se tomó el mes de diciembre como período de pruebas, capturando los datos medidos cada 15 minutos. Estas mediciones, que incluían información sobre la temperatura y humedad dentro de la habitación, se exportaron a una base de datos para su posterior análisis y comparación.
+En cuanto a la recopilación y almacenamiento de datos, se tomó el mes de diciembre como período de pruebas, capturando los datos medidos cada 15 minutos. Estas mediciones, que incluían información sobre la temperatura y humedad dentro de la habitación, se exportaron a una base de datos para su posterior análisis y comparación.
 
 \subsection{Resultados del estudio}
 
@@ -186,29 +190,22 @@ Para analizar el rendimiento y utilidad de la propuesta, se realiza una comparac
 
 En el caso de la temperatura (\autoref{fig:graph-temperatures-december}), se observa que el controlador difuso, representado en la zona gris del gráfico, logra mantener la temperatura en el rango de confort de manera constante y con mínima variación. Esto significa que el controlador difuso no solo ajusta la temperatura dentro de los límites deseados, sino que también evita grandes fluctuaciones, proporcionando un ambiente estable. En cambio, durante el periodo en blanco, cuando operaba el controlador reactivo, aunque la temperatura también se mantenía en el rango de confort, las oscilaciones eran notoriamente más pronunciadas, lo que implica un ajuste menos preciso y estable.
 
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.95\textwidth]{imgs/graph-temperatures-december.JPG}
+	\caption{Valores de la temperatura recogidos en diciembre de 2012.}
+	\label{fig:graph-temperatures-december}
+\end{figure}
+
 Para la humedad relativa (\autoref{fig:graph-humidity-december}), aunque la estabilidad es menos clara que en el caso de la temperatura, el controlador difuso también demuestra un mejor rendimiento. En la zona gris, donde el controlador difuso estaba activo, las oscilaciones en la humedad son menores, manteniéndose dentro del rango de confort de forma más controlada. Esto contrasta con el periodo inicial, donde el controlador reactivo produce mayores fluctuaciones, lo que sugiere que el controlador difuso es más efectivo en estabilizar tanto la temperatura como la humedad relativa.
-
-En resumen, estos resultados indican que el controlador difuso no solo es eficaz en mantener las condiciones de confort (temperatura y humedad) dentro de los límites deseados, sino que además logra hacerlo con menos variaciones, creando un ambiente más estable en comparación con el controlador reactivo.
-
-- resumen de resultados
-
-Los resultados obtenidos del estudio indican que el controlador difuso logró mantener las condiciones ambientales dentro de los rangos de confort definidos, con una notable reducción en las fluctuaciones de temperatura y humedad. Durante el período de prueba, el controlador mostró un mejor desempeño que los sistemas reactivos, proporcionando un ambiente más estable y confortable para los ocupantes
-
-- interpretación de los mismos
-
-Estos hallazgos destacan la eficacia del controlador difuso para mejorar la gestión de la calidad ambiental interior. La capacidad del sistema para ajustarse dinámicamente a las condiciones cambiantes del entorno permitió no solo mejorar el confort, sino también optimizar el uso de energía. Esto subraya el potencial de la lógica difusa como una solución integral para sistemas HVAC avanzados en contextos de edificios inteligentes
 
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=0.95\textwidth]{imgs/graph-humidity-december.JPG}
-	\caption{Valores de la humedad recogidos en diciembre de 2012}
+	\caption{Valores de la humedad recogidos en diciembre de 2012.}
 	\label{fig:graph-humidity-december}
 \end{figure}
 
-\begin{figure}[H]
-	\centering
-	\includegraphics[width=0.95\textwidth]{imgs/graph-temperatures-december.JPG}
-	\caption{Valores de la temperatura recogidos en diciembre de 2012}
-	\label{fig:graph-temperatures-december}
-\end{figure}
+En resumen, estos resultados indican que el controlador difuso no solo es eficaz en mantener las condiciones de confort (temperatura y humedad) dentro de los límites deseados, sino que además logra hacerlo con menos variaciones, creando un ambiente más estable en comparación con el controlador reactivo.
+
 
