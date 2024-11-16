@@ -1,6 +1,6 @@
 \section{Desarrollo}
 
-En esta sección se va a proporcionar una breve descripción del caso práctico, el diseño detallado del FLC, las pruebas realizadas y los resultados obtenidos, así como las interpretaciones de los mismos. 
+En esta sección se va a proporcionar una breve descripción del caso práctico, explicar el diseño detallado del FLC, las pruebas realizadas y los resultados obtenidos, así como las interpretaciones de los mismos. 
 
 \subsection{Descripción del caso práctico}
 
@@ -81,11 +81,11 @@ La base de conocimiento del FLC incluye:
 	
 	\item \textbf{Reglas difusas}: conjunto de reglas IF-THEN derivadas del conocimiento experto. Ejemplos:
 	\begin{itemize}
-		\item Si la temperatura interna es Media y la externa es Alta, entonces mantener la temperatura y el humidificador en nivel estándar.
-		\item Si la humedad es Baja y la temperatura interna es Baja, entonces el aire acondicionado debe estar en caliente, el humidificador en nivel Alto, y subir la temperatura.
+		\item Si la temperatura interna es media y la externa es alta, entonces se mantiene la temperatura y se cambia el humidificador al nivel estándar.
+		\item Si la humedad y la temperatura interna son bajas, entonces se pone el aire acondicionado en caliente, el humidificador en nivel alto y se sube la temperatura.
 	\end{itemize}
 	
-	Se han utilizado 17 reglas, que dan lugar a diversos escenarios al combinar las posibles entradas del sistema. Se muestra un subconjunto de las reglas en la \autoref{fig:set-of-rules}.
+	Se ha utilizado un total de 17 reglas, que dan lugar a diversos escenarios al combinar las posibles entradas del sistema. A continuación se muestra un subconjunto de dichas reglas:
 	
 	\begin{figure}[H]
 		\centering
