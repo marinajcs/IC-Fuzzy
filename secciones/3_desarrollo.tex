@@ -98,7 +98,7 @@ El motor de inferencia aplica el \textbf{método Mamdani max-min} para combinar 
 
 \begin{figure}[H]
 	\centering
-	\includegraphics[width=0.55\textwidth]{imgs/mamdani.JPG}
+	\includegraphics[width=0.50\textwidth]{imgs/mamdani.JPG}
 	\caption{Método mamdani max-min}
 	\label{fig:mamdani}
 \end{figure}
@@ -162,30 +162,34 @@ En resumen, el simulador no solo sirvió para validar las reglas iniciales, sino
 
 Para complementar las pruebas del simulador previamente mencionado, el controlador difuso fue sometido a una serie de tests en un entorno real, concretamente, en una habitación equipada con varios sensores.
 
-La \textbf{habitación experimental} utilizada, con unas dimensiones de 5.2m x 5.2m x 2.5m, disponía de lo siguiente:
+La \textbf{habitación experimental} utilizada, con unas dimensiones de 5.2m x 5.2m x 2.5m, tenía las siguientes características:
 \begin{itemize}
 	\item Una puerta y una ventana ubicadas en posiciones opuestas.
 	\item Un sistema HVAC con calefacción, ventilación y aire acondicionado.
-	\item Dos sensores para medir la temperatura y humedad.
+	\item Dos sensores para medir la temperatura y humedad, respectivamente (1).
+	\item La ausencia de muebles y ocupantes durante el período de pruebas (2).
 \end{itemize}
 
-De esta manera, aunque no pudieron obtenerse resultados en función de todos los parámetros implicados en la IEQ debido a limitaciones técnicas, las dos variables que sí pudieron tomarse en cuenta proporcionaron resultados interesantes. 
+(1) De esta manera, aunque no pudieron obtenerse resultados en función de todos los parámetros implicados en la IEQ debido a limitaciones técnicas, las dos variables que sí pudieron tomarse en cuenta proporcionaron resultados interesantes.
 
-Durante el período de pruebas, la habitación permaneció completamente vacía en cuanto a muebles y ocupantes, para así poder eliminar grandes interferencias externa que pudieran alterar las mediciones. No obstante, la puerta se abrió ocasionalmente, y algunas personas ingresaron por breves periodos, lo que generó pequeñas perturbaciones que fueron consideradas en el análisis.
+(2) Para así poder eliminar grandes interferencias externas que pudieran alterar las mediciones; aunque al final la puerta se abrió ocasionalmente, con la entrada breve de algunas personas, lo que terminó generando pequeñas perturbaciones que fueron consideradas en el análisis.
 
-Es importante mencionar que esta configuración, aunque ideal para controlar variables experimentales, no es representativa de un entorno habitado típico. A pesar de ello, se optó por este enfoque para modelar el comportamiento del sistema en un ambiente lo más controlado posible. En futuros experimentos, se planea introducir factores adicionales, como la presencia de personas y muebles, para evaluar el desempeño del controlador en condiciones más realistas y complejas.
+\vspace{0.4cm}
 
-**Recopilación y almacenamiento de datos:**
-
-Durante el mes de diciembre, se recolectaron datos cada 15 minutos. Estas mediciones incluyeron información sobre la temperatura y la humedad dentro de la habitación, así como datos de referencia sobre las condiciones exteriores. Toda esta información se almacenó en una base de datos para su posterior análisis y comparación.
-
-**Reglas de confort difusas y manejo de actuadores:**
-
-El controlador fue configurado con un conjunto de reglas de confort difusas, diseñadas previamente por expertos, para gestionar de manera eficiente los diferentes actuadores de la habitación. En este caso, el principal foco estuvo en el sistema HVAC, que fue controlado para mantener la temperatura y la humedad dentro de los rangos de confort predefinidos. Las reglas difusas permitieron al sistema tomar decisiones basadas en las condiciones actuales del entorno, ajustando dinámicamente los niveles de temperatura y humedad.
-
-Este experimento proporcionó un valioso conjunto de datos para evaluar la eficacia del controlador difuso en comparación con métodos más tradicionales. Los resultados obtenidos ayudaron a identificar áreas de mejora y a refinar aún más las reglas de control, allanando el camino para futuras implementaciones en entornos más complejos y realistas.
+En cuanto a la \textbf{recopilación y almacenamiento de datos}, se tomó el mes de diciembre como período de pruebas, capturando los datos medidos cada 15 minutos. Estas mediciones, que incluían información sobre la temperatura y humedad dentro de la habitación, se exportaron a una base de datos para su posterior análisis y comparación.
 
 \subsection{Resultados del estudio}
+
+Para este subapartado, se han tenido en cuenta los resultados que se obtuvieron en las pruebas experimentales en el período de diciembre de 2012.
+
+Para analizar el rendimiento y utilidad de la propuesta, se realiza una comparación de los resultados obtenidos en la sala piloto cuando se ejecutan dos tipos distintos de controladores: el controlador difuso diseñado y un controlador reactivo más tradicional.
+
+En el caso de la temperatura (\autoref{fig:graph-temperatures-december}), se observa que el controlador difuso, representado en la zona gris del gráfico, logra mantener la temperatura en el rango de confort de manera constante y con mínima variación. Esto significa que el controlador difuso no solo ajusta la temperatura dentro de los límites deseados, sino que también evita grandes fluctuaciones, proporcionando un ambiente estable. En cambio, durante el periodo en blanco, cuando operaba el controlador reactivo, aunque la temperatura también se mantenía en el rango de confort, las oscilaciones eran notoriamente más pronunciadas, lo que implica un ajuste menos preciso y estable.
+
+Para la humedad relativa (\autoref{fig:graph-humidity-december}), aunque la estabilidad es menos clara que en el caso de la temperatura, el controlador difuso también demuestra un mejor rendimiento. En la zona gris, donde el controlador difuso estaba activo, las oscilaciones en la humedad son menores, manteniéndose dentro del rango de confort de forma más controlada. Esto contrasta con el periodo inicial, donde el controlador reactivo produce mayores fluctuaciones, lo que sugiere que el controlador difuso es más efectivo en estabilizar tanto la temperatura como la humedad relativa.
+
+En resumen, estos resultados indican que el controlador difuso no solo es eficaz en mantener las condiciones de confort (temperatura y humedad) dentro de los límites deseados, sino que además logra hacerlo con menos variaciones, creando un ambiente más estable en comparación con el controlador reactivo.
+
 - resumen de resultados
 
 Los resultados obtenidos del estudio indican que el controlador difuso logró mantener las condiciones ambientales dentro de los rangos de confort definidos, con una notable reducción en las fluctuaciones de temperatura y humedad. Durante el período de prueba, el controlador mostró un mejor desempeño que los sistemas reactivos, proporcionando un ambiente más estable y confortable para los ocupantes
@@ -193,4 +197,18 @@ Los resultados obtenidos del estudio indican que el controlador difuso logró ma
 - interpretación de los mismos
 
 Estos hallazgos destacan la eficacia del controlador difuso para mejorar la gestión de la calidad ambiental interior. La capacidad del sistema para ajustarse dinámicamente a las condiciones cambiantes del entorno permitió no solo mejorar el confort, sino también optimizar el uso de energía. Esto subraya el potencial de la lógica difusa como una solución integral para sistemas HVAC avanzados en contextos de edificios inteligentes
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.95\textwidth]{imgs/graph-humidity-december.JPG}
+	\caption{Valores de la humedad recogidos en diciembre de 2012}
+	\label{fig:graph-humidity-december}
+\end{figure}
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.95\textwidth]{imgs/graph-temperatures-december.JPG}
+	\caption{Valores de la temperatura recogidos en diciembre de 2012}
+	\label{fig:graph-temperatures-december}
+\end{figure}
 
