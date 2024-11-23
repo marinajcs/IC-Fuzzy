@@ -111,15 +111,15 @@ Luego, para combinar las salidas de varias reglas activadas, se usa el operador 
 
 En la \autoref{fig:mamdani}: $x$ son las mediciones de los sensores de entrada, $\alpha_i$ es el grado en que una entrada dada satisface la condición de la $i$-ésima regla ($R_i$), y $\mu_{output_i}$, la agregación de los conjuntos difusos de salida de todas las reglas para $output_i$.
 
-Dado que el enfoque empleado es Max-Min, se puede asumir que se ha utilizado el \textit{Modo A - FATI} (\textit{First Aggregate Then Infer}), que como su nombre indica, consiste en primero agregar los conjuntos difusos individuales inferidos, después defuzzificar para obtener un valor preciso, manteniendo toda la información difusa hasta el último paso \parencite{peregrin2000integracion}.
+Dado que el enfoque empleado es \textit{Max-Min}, se puede asumir que se ha utilizado el \textit{Modo A - FATI} (\textit{First Aggregate Then Infer}), que como su nombre indica, consiste en primero agregar los conjuntos difusos individuales inferidos, y después defuzzificar para obtener un valor preciso, manteniendo toda la información difusa hasta el último paso \parencite{peregrin2000integracion}.
 
-Para el proceso de desfuzzificación, en el estudio no se concreta de manera explícita el método utilizado, pero es muy probable que se haya empleado el método \textit{centroide}, también conocido como centro de gravedad, ya que es uno de los más comunes asociados al método Mamdani tradicional. 
+Para el proceso de defuzzificación, en el estudio no se concreta de manera explícita el método utilizado, pero es muy probable que se haya empleado el método \textit{centroide}, también conocido como centro de gravedad, ya que es uno de los más comunes asociados al método Mamdani tradicional. 
 
 Esta técnica calcula el punto medio del área bajo la curva del conjunto difuso resultante. Matemáticamente (\autoref{fig:centroide}), se obtiene como el cociente entre: la suma ponderada de todos los valores de salida posibles ($z$) en el rango del conjunto difuso (cuánto contribuye cada valor $z$ al equilibrio general) y la suma total de los grados de pertenencia ($C(z)$) en el conjunto difuso.
 
 \begin{figure}[H]
 	\centering
-	\includegraphics[width=0.23\textwidth]{imgs/centroide.JPG}
+	\includegraphics[width=0.33\textwidth]{imgs/centroide.JPG}
 	\caption{Fórmula para calcular el centroide \parencite{klir1996fuzzy}.}
 	\label{fig:centroide}
 \end{figure}

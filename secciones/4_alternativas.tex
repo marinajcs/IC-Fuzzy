@@ -27,6 +27,38 @@ El WMC-SSGA comienza con la generación de una población inicial dentro de unos
 
 El método anterior contrasta con el FLC unificado, que carece de capacidades de autoajuste y depende únicamente de reglas definidas por expertos.
 
+
+El controlador difuso presenta una estructura jerárquica, diseñada para procesar múltiples variables y tomar decisiones complejas optimizando el rendimiento del sistema HVAC. Esta estructura se organiza en módulos jerárquicos, donde cada nivel se encarga de tareas específicas y alimenta al siguiente. Se muestra un ejemplo en la \autoref{fig:fuzzy-genetics-functions}.
+
+En la primera capa, se procesan variables básicas como las entradas del índice de control térmico (\textit{PMV}), el valor del PMV anterior (\textit{PMV t-1}), la diferencia entre la temperatura exterior y la interior (\textit{Tout-Tin}) y la posición de la válvula antes del ajuste (\textit{Valve old position}). 
+
+Las flechas entre módulos indican el flujo de la información, señalando cómo los módulos de niveles inferiores sirven para calcular valores que son utilizados como entradas por los niveles superiores. Por ejemplo, partiendo de la \textit{PMV} y \textit{PMV t-1}, se obtiene la preferencia térmica (\textit{Thermal preference}) basada en las condiciones actuales del ambiente. Y esta variable, que pertenece a la segunda capa, puede utilizarse con la \textit{Tout-Tin} para obtener calor requerido (\textit{Required heat}). Este último es necesario en la tercera capa para, junto con la anterior posición de la válvula y la prioridad térmica/energética, poder calcular tanto la nueva posición de la válvula como la velocidad del ventilador del sistema HVAC.
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.95\textwidth]{imgs/fuzzy-genetics-functions.JPG}
+	\caption{Diagrama de módulos jerárquicos y funciones de pertenencia \parencite{alcala2003fuzzy}.}
+	\label{fig:fuzzy-genetics-functions}
+\end{figure}
+
+Las optimizaciones fruto del algoritmo genético vienen reflejadas en la \autoref{fig:fuzzy-genetics-functions} mediante las líneas negras de las gráficas, en contraste con las grises, que representan la configuración original del sistema. Tras la optimización, las funciones muestran ligeros desplazamientos y ajustes en sus picos y bordes, adaptándose mejor a los datos del modelo, ya que estos cambios buscan maximizar la precisión y robustez del sistema.
+
+Asimismo, a diferencia del estudio anterior, en este se ha seguido el \textit{Modo B - FITA} (\textit{First Infer Then Aggregate}). <<En este modo de trabajo, se considera individualmente la contribución de cada conjunto difuso inferido y la acción precisa final se obtiene mediante algún tipo de operación efectuada sobre un valor preciso
+característico obtenido a partir de cada conjunto difuso individual. De este modo, se
+evita el calculo del conjunto difuso final, lo que ahorra una gran cantidad de
+tiempo de cálculo>> \parencite{peregrin2000integracion}. Dicho en otras palabras, cada conjunto difuso resultante de una regla se defuzzifica individualmente, y posteriormente, se utiliza una técnica para combinar los valores crisp obtenidos y así poder producir la salida final.
+
+Para la defuzzificación, en lugar del cálculo del centroide, se ha empleado la técnica \textit{MOM} (\textit{Mean of Maxima}) o media de los máximos, en el que se seleccionan todos los puntos del conjunto difuso de salida donde la función de pertenencia alcanza su valor máximo, para luego calcular el promedio aritmético de esos puntos máximos.
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.33\textwidth]{imgs/mom.JPG}
+	\caption{Fórmula de Mean of Maxima (MOM) \parencite{klir1996fuzzy}.}
+	\label{fig:mom}
+\end{figure}
+
+En \autoref{fig:mom}, se considera un conjunto $M$ de valores crisp ($z_k$) que tienen el grado de pertenencia máximo dentro del conjunto difuso $C$. 
+
 \subsubsection{Pruebas}
 
 Se llevaron a cabo experimentos tanto en simulaciones como en entornos reales. Los primeros permitieron evaluar durante períodos de 10 días las distintas configuraciones del controlador bajo condiciones climáticas específicas; mientras que los segundos proporcionaron validación en condiciones más realistas. Los resultados se compararon con un controlador convencional On-Off y con versiones iniciales no optimizadas del FLC para medir la mejora alcanzada.
@@ -57,7 +89,7 @@ Así, a diferencia de los otros dos sistemas que se centran en un conjunto más 
 
 \begin{figure}[H]
 	\centering
-	\includegraphics[width=0.7\textwidth]{imgs/fuzzy-inference-system-diagram.JPG}
+	\includegraphics[width=0.75\textwidth]{imgs/fuzzy-inference-system-diagram.JPG}
 	\caption{Diagrama del sistema de inferencia difusa \parencite{jablonski2018fuzzy}.}
 	\label{fig:fuzzy-inference-system-diagram}
 \end{figure}
@@ -71,7 +103,7 @@ En este estudio se han utilizado funciones de pertenencia triangulares para las 
 	\label{fig:fuzzy-2-membership-lassitude-freshness}
 \end{figure}
 
-Además, este sistema destaca por implementar un módulo de inferencia en \textit{LabVIEW}, diseñando desde cero los bloques de fuzzificación, inferencia y desfuzzificación, mientras que en otros estudios se utilizaron herramientas estándar o adaptaciones de controladores PID.
+Además, este sistema destaca por implementar un módulo de inferencia en \textit{LabVIEW}, diseñando desde cero los bloques de fuzzificación, inferencia y defuzzificación, mientras que en otros estudios se utilizaron herramientas estándar o adaptaciones de controladores PID.
 
 \subsubsection{Pruebas}
 
@@ -85,7 +117,7 @@ En la \autoref{fig:fuzzy-inference-system-results}, se comparan las salidas del 
 
 \begin{figure}[H]
 	\centering
-	\includegraphics[width=0.72\textwidth]{imgs/fuzzy-inference-system-results.JPG}
+	\includegraphics[width=0.76\textwidth]{imgs/fuzzy-inference-system-results.JPG}
 	\caption{Resultados de las encuestas y medidas del sistema \parencite{jablonski2018fuzzy}.}
 	\label{fig:fuzzy-inference-system-results}
 \end{figure}
