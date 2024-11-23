@@ -10,14 +10,14 @@ El estudio se centró en el control de sistemas HVAC en dos sitios de prueba rea
 
 \subsubsection{Diseño del controlador difuso}
 
-El controlador difuso fue diseñado para manejar múltiples criterios, como el confort térmico, la calidad del aire interior y el consumo de energía, usando una base de reglas construida con la experiencia de expertos. Además, se utilizaron funciones de membresía triangulares para simplificar el proceso de inferencia y mejorar la manejabilidad del sistema.
+El controlador difuso fue diseñado para manejar múltiples criterios, como el confort térmico, la calidad del aire interior y el consumo de energía, usando una base de reglas construida con la experiencia de expertos. Además, se utilizaron funciones de pertenencia triangulares para simplificar el proceso de inferencia y mejorar la manejabilidad del sistema.
 
-A diferencia del estudio principal que se trata en este documento, este proyecto también integró algoritmos genéticos (AG) para afinar automáticamente los parámetros del controlador difuso. Estos AG optimizaron las bases de conocimiento ajustando las funciones de membresía para mejorar el rendimiento del sistema bajo diferentes condiciones operativas. El método propuesto recibió el nombre de \textit{Weighted Multi-Criteria Steady-State Genetic Algorithm} (WMC-SSGA), cuyo comportamiento viene reflejado en la \autoref{fig:flowchart-ga}.
+A diferencia del estudio principal que se trata en este documento, este proyecto también integró algoritmos genéticos (AG) para afinar automáticamente los parámetros del controlador difuso. Estos AG optimizaron las bases de conocimiento ajustando las funciones de pertenencia para mejorar el rendimiento del sistema bajo diferentes condiciones operativas. El método propuesto recibió el nombre de \textit{Weighted Multi-Criteria Steady-State Genetic Algorithm} (WMC-SSGA), cuyo comportamiento viene reflejado en la \autoref{fig:flowchart-ga}.
 
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=0.45\textwidth]{imgs/flowchart-ga.JPG}
-	\caption{Ddiagrama de flujo del algoritmo WMC-SSGA.}
+	\caption{Ddiagrama de flujo del algoritmo WMC-SSGA \parencite{alcala2003fuzzy}.}
 	\label{fig:flowchart-ga}
 \end{figure}
 
@@ -39,26 +39,37 @@ En términos de eficiencia energética, en este estudio se lograron ahorros de h
 
 \subsection{Sistema de inferencia difusa centrado en la evaluación de IEQ}
 
-El sistema propuesto por Karol Jabłonski y Tomasz Grychowski, miembros de una universidad polaca, se diseñó para evaluar las condiciones ambientales interiores en un edificio mediante un sistema de sensores y un módulo de inferencia difusa. Similar al controlador difuso unificado, este sistema se enfocó en múltiples parámetros como temperatura, humedad y CO2, pero también integró otros factores como iluminación, ruido y olores, proporcionando una evaluación más completa del confort interior \parencite{jablonski2018fuzzy}.
+El sistema propuesto por Karol Jabłonski y Tomasz Grychowski, miembros de una universidad polaca, se diseñó para evaluar las condiciones ambientales interiores en un edificio mediante un sistema de sensores y un módulo de inferencia difusa. Similar al primer estudio, este sistema se enfocó en múltiples parámetros como temperatura, humedad y CO2, pero también integró otros factores como iluminación, ruido y olores, proporcionando una evaluación más completa del confort interior \parencite{jablonski2018fuzzy}.
 
-\subsubsection{Diseño del controlador difuso}
+El estudio no describe un controlador difuso en el sentido clásico (es decir, un sistema que toma decisiones para regular un proceso dinámico), sino más bien un sistema de inferencia difusa diseñado para evaluar y calificar el confort ambiental en interiores. Aunque emplea lógica difusa y comparte componentes clave de un controlador difuso (como funciones de pertenencia, reglas difusas y defuzzificación), su propósito es diferente.
+
+Dicho esto, el sistema podría evolucionar hacia un controlador difuso si sus salidas fueran utilizadas para ajustar automáticamente dispositivos como sistemas HVAC.
+
+\subsubsection{Diseño del sistema difuso}
 
 Este estudio adoptó un sistema híbrido de inferencia difusa para procesar múltiples índices, utilizando una estructura modular con subsistemas independientes para manejar los distintos parámetros.
 
 La \autoref{fig:fuzzy-inference-system-diagram} representa el funcionamiento del sistema de inferencia difusa, que se distingue por su enfoque integral, al combinar múltiples parámetros ambientales mediante subsistemas especializados que contribuyen a una evaluación global del confort. 
 
-Las variables monitoreadas incluyen temperatura del aire, temperatura de globo negro, humedad relativa, densidad de CO2, iluminación, ruido y olores, que se procesan a través de módulos de inferencia difusa para estimar diferentes índices de confort. Cada uno de estos índices (confort térmico, frescura del aire y fatiga) es calculado de forma independiente y luego integrado en un módulo principal que genera una evaluación global del confort percibido.
+Las variables monitoreadas incluyen temperatura del aire, temperatura de globo negro, humedad relativa, densidad de CO2, iluminación, ruido y olores, que se procesan a través de módulos de inferencia difusa para estimar diferentes índices de confort. Cada uno de estos índices (confort térmico, frescura del aire y fatiga) es calculado de forma independiente en tres subsistemas, y luego integrado en un módulo principal (confort general) que genera una evaluación global del confort percibido.
 
-Así, a diferencia de los otros dos sistemas que se centran en un conjunto más reducido de variables, este enfoque incluye factores adicionales como olores y ruido, que pueden tener un impacto significativo en la percepción del confort.
+Así, a diferencia de los otros dos sistemas que se centran en un conjunto más reducido de variables, este enfoque incluye factores adicionales como olores y ruido, que pueden tener un impacto significativo en la percepción del confort. Además, el sistema consta de 92 reglas difusas, distribuidas entre 4 subsistemas principales, lo que contrasta con un enfoque unificado, que habría requerido hasta 2400 reglas para cubrir todas las combinaciones posibles de entradas.
 
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=0.7\textwidth]{imgs/fuzzy-inference-system-diagram.JPG}
-	\caption{Diagrama del sistema de inferencia difusa}
+	\caption{Diagrama del sistema de inferencia difusa \parencite{jablonski2018fuzzy}.}
 	\label{fig:fuzzy-inference-system-diagram}
 \end{figure}
 
- 
+En este estudio se han utilizado funciones de pertenencia triangulares para las salidas y trapezoidales para algunas entradas. Se muestra un ejemplo en la \autoref{fig:fuzzy-2-membership-lassitude-freshness}. 
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.5\textwidth]{imgs/fuzzy-2-membership-lassitude-freshness.JPG}
+	\caption{Funciones de pertenencia de la fatiga y frescura \parencite{jablonski2018fuzzy}.}
+	\label{fig:fuzzy-2-membership-lassitude-freshness}
+\end{figure}
 
 Además, este sistema destaca por implementar un módulo de inferencia en \textit{LabVIEW}, diseñando desde cero los bloques de fuzzificación, inferencia y desfuzzificación, mientras que en otros estudios se utilizaron herramientas estándar o adaptaciones de controladores PID.
 
@@ -70,7 +81,20 @@ Durante las pruebas, se realizaron encuestas para validar los índices calculado
 
 \subsubsection{Resultados y conclusiones}
 
-Al igual que los sistemas mencionados anteriormente, este demostró una capacidad efectiva para mantener condiciones óptimas de confort interior. Además, destacó por la detección de eventos específicos como la presencia de alimentos o cambios en la ocupación. De esta forma, este sistema amplía el rango de variables monitoreadas y evaluadas, proporcionando una evaluación más centrada en todo aquello que define IEQ.
+En la \autoref{fig:fuzzy-inference-system-results}, se comparan las salidas del sistema difuso con encuestas subjetivas en los cuatro aspectos del confort ambiental definidos por los subsistemas. Los resultados muestran que el sistema sigue tendencias similares a las percepciones humanas, con picos y descensos relacionados con cambios en las condiciones ambientales, aunque es más continuo y menos variable que las encuestas. Esto valida la capacidad del sistema para evaluar objetivamente el confort, reflejando correctamente los efectos de factores como temperatura, iluminación y concentración de CO2.
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.72\textwidth]{imgs/fuzzy-inference-system-results.JPG}
+	\caption{Resultados de las encuestas y medidas del sistema \parencite{jablonski2018fuzzy}.}
+	\label{fig:fuzzy-inference-system-results}
+\end{figure}
+
+Este enfoque destaca por la detección de eventos específicos como la presencia de alimentos o cambios en la ocupación. De esta forma, este sistema amplía el rango de variables monitoreadas y evaluadas, proporcionando una evaluación más centrada en todo aquello que define IEQ.
+
+Como ventajas adicionales, dividir un sistema difuso en subsistemas reduce drásticamente la complejidad al evitar el crecimiento exponencial ($n^m$, siendo $n$ es el número de valores de entrada y $m$ el número de entradas) de reglas que ocurriría en un sistema unificado, donde cada entrada y sus combinaciones requieren cobertura. Esto hace que el diseño sea más manejable y ajustable. Además, la modularidad permite mejorar o expandir cada subsistema de forma independiente, sin afectar al resto; por ejemplo, al añadir un nuevo sensor solo se ajusta el subsistema correspondiente. También mejora la eficiencia computacional, ya que cada subsistema realiza cálculos más simples, permitiendo respuestas rápidas a los cambios ambientales.
+
+Aunque dividir un sistema difuso en subsistemas ofrece claras ventajas, también puede presentar algunas desventajas en comparación con el enfoque unificado. Una de las principales limitaciones es la pérdida de interacción directa entre todas las variables de entrada. Al segmentar las entradas en módulos, las interacciones complejas que podrían influir en el resultado general pueden no ser capturadas de manera precisa, ya que cada subsistema procesa solo un subconjunto de las variables. Además, requiere una fase adicional de integración para combinar las salidas de los subsistemas en un resultado global, lo que puede introducir incertidumbre o simplificaciones adicionales. Finalmente, aunque se reduce la complejidad computacional, un sistema unificado podría ser más eficiente en aplicaciones donde el hardware es suficientemente potente, ya que permite procesar todas las combinaciones posibles en una sola etapa sin necesidad de combinar resultados.
 
 \subsection{Comparaciones entre los tres estudios}
 
@@ -79,10 +103,10 @@ Las comparaciones entre FLCs diseñados se han realizado en base a cinco aspecto
 \begin{table}[H]
 	\centering
 	\renewcommand{\arraystretch}{1.5}
-	\begin{tabular}{|p{2.5cm}|p{4.1cm}|p{4.1cm}|p{4.1cm}|}
+	\begin{tabular}{|p{2.5cm}|p{4cm}|p{4cm}|p{4cm}|}
 		\hline
 		\rowcolor{lightgray}
-		\textbf{Aspecto} & \textbf{Controlador difuso unificado} & \textbf{Controlador con algoritmos genéticos} & \textbf{Sistema de Inferencia Difusa} \\ \hline
+		\textbf{Aspecto} & \textbf{Controlador difuso unificado} & \textbf{Controlador con algoritmos genéticos} & \textbf{Sistema de inferencia difusa} \\ \hline
 		
 		\textbf{Variables controladas} & 
 		Temperatura, humedad, CO2, iluminación & 
@@ -91,7 +115,7 @@ Las comparaciones entre FLCs diseñados se han realizado en base a cinco aspecto
 		
 		\textbf{Enfoque metodológico} & 
 		Controlador difuso clásico con reglas definidas por expertos. FLC supervisa PIDs para HVAC & 
-		Integración de algoritmos genéticos para optimizar automáticamente reglas y funciones de membresía & 
+		Integración de algoritmos genéticos para optimizar automáticamente reglas y funciones de pertenencia & 
 		Arquitectura modular con subsistemas independientes. Implementación en LabVIEW \\ \hline
 		
 		\textbf{Pruebas y validación} & 

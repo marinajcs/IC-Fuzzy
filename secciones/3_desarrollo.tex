@@ -1,6 +1,6 @@
 \section{Desarrollo}
 
-En esta sección se va a proporcionar una breve descripción del caso práctico, explicar el diseño detallado del FLC, las pruebas realizadas y los resultados obtenidos, así como las interpretaciones de los mismos. 
+En esta sección se va a proporcionar una breve descripción del caso práctico, explicar el diseño detallado del FLC, las pruebas realizadas y los resultados obtenidos, así como las interpretaciones de los mismos. Todas las imágenes en esta sección han sido sacadas del estudio del controlador difuso unificado \parencite{molina2013unifying}, salvo que se indique lo contrario.
 
 \subsection{Descripción del caso práctico}
 
@@ -53,33 +53,33 @@ El controlador difuso procesa las entradas y determina las acciones necesarias p
 
 La base de conocimiento del FLC incluye:
 \begin{enumerate}
-	\item \textbf{Funciones de membresía}: se utilizan funciones trapezoidales para describir las etiquetas lingüísticas (Bajo, Medio, Alto).
+	\item \textbf{Funciones de pertenencia}: se utilizan funciones trapezoidales para describir las etiquetas lingüísticas (Bajo, Medio, Alto) que serán empleadas para el proceso de fuzzificación.
 	\begin{figure}[H]
 		\centering
 		\includegraphics[width=0.55\textwidth]{imgs/function.JPG}
-		\caption{Función de membresía.}
+		\caption{Función de pertenencia.}
 		\label{fig:function}
 	\end{figure}
 	
-	En la \autoref{fig:function}: $L$ puede tomar el valor de Bajo, Medio y Alto; $a$ y $d$ son los puntos extremos de la función de membresía trapezoidal; $b$ y $c$, los puntos máximos de la función de membresía trapezoidal; y $x_i$ es el $i$-ésimo sensor.
+	En la \autoref{fig:function}: $L$ puede tomar el valor de Bajo, Medio y Alto; $a$ y $d$ son los puntos extremos de la función de pertenencia trapezoidal; $b$ y $c$, los puntos máximos de la función de pertenencia trapezoidal; y $x_i$ es el $i$-ésimo sensor.
 	
-	Las Figuras \ref{fig:membership-functions-input} y \ref{fig:membership-functions-output} muestran las funciones de membresía utilizadas en el sistema de control difuso para las entradas y las salidas, respectivamente. Estas funciones son necesarias para convertir los valores numéricos de los sensores en términos lingüísticos (bajo, medio, alto) que el sistema difuso pueda interpretar y procesar.
+	Las Figuras \ref{fig:membership-functions-input} y \ref{fig:membership-functions-output} muestran las funciones de pertenencia utilizadas en el sistema de control difuso para las entradas y las salidas, respectivamente. Estas funciones son necesarias para convertir los valores numéricos (\textit{crisp}) de los sensores en términos lingüísticos (bajo, medio, alto) que el sistema difuso pueda interpretar y procesar.
 	
 	\begin{figure}[H]
 		\centering
 		\includegraphics[width=0.8\textwidth]{imgs/membership-functions-input.JPG}
-		\caption{Función de membresía de las variables de entrada.}
+		\caption{Función de pertenencia de las variables de entrada.}
 		\label{fig:membership-functions-input}
 	\end{figure}
 	
 	\begin{figure}[H]
 		\centering
 		\includegraphics[width=0.8\textwidth]{imgs/membership-functions-output.JPG}
-		\caption{Función de membresía de las variables de salida}
+		\caption{Función de pertenencia de las variables de salida}
 		\label{fig:membership-functions-output}
 	\end{figure}
 	
-	\item \textbf{Reglas difusas}: conjunto de reglas IF-THEN derivadas del conocimiento experto. Ejemplos:
+	\item \textbf{Reglas difusas}: conjunto de reglas \textit{IF-THEN} derivadas del conocimiento experto. Ejemplos:
 	\begin{itemize}
 		\item Si la temperatura interna es media y la externa es alta, entonces se mantiene la temperatura y se cambia el humidificador al nivel estándar.
 		\item Si la humedad y la temperatura interna son bajas, entonces se pone el aire acondicionado en caliente, el humidificador en nivel alto y se sube la temperatura.
@@ -96,16 +96,33 @@ La base de conocimiento del FLC incluye:
 	
 \end{enumerate}
 
-El motor de inferencia aplica el método \textit{Mamdani max-min} para combinar reglas y calcular las salidas. Este método evalúa el grado en que cada regla se cumple y combina las salidas difusas.
+El motor de inferencia aplica el método \textit{Mamdani Max-Min} para combinar reglas y calcular las salidas. 
+
+Como se ha visto antes, cada regla difusa tiene una condición (\textit{IF}) y una conclusión (\textit{THEN}). Para combinar las condiciones de entrada (los valores medidos por los sensores) con los antecedentes de las reglas, se usa el operador "min" (intersección). Esto calcula el grado de cumplimiento de la regla considerando las funciones de pertenencia de las entradas (en este caso, las funciones trapezoidales que traducen los valores crisp a difusos).
+
+Luego, para combinar las salidas de varias reglas activadas, se usa el operador "max" (unión), generando así el conjunto difuso de salida que representa las conclusiones de todas las reglas activadas.
 
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=0.50\textwidth]{imgs/mamdani.JPG}
-	\caption{Método mamdani max-min.}
+	\caption{Método Mamdani Max-Min.}
 	\label{fig:mamdani}
 \end{figure}
 
 En la \autoref{fig:mamdani}: $x$ son las mediciones de los sensores de entrada, $\alpha_i$ es el grado en que una entrada dada satisface la condición de la $i$-ésima regla ($R_i$), y $\mu_{output_i}$, la agregación de los conjuntos difusos de salida de todas las reglas para $output_i$.
+
+Dado que el enfoque empleado es Max-Min, se puede asumir que se ha utilizado el \textit{Modo A - FATI} (\textit{First Aggregate Then Infer}), que como su nombre indica, consiste en primero agregar los conjuntos difusos individuales inferidos, después defuzzificar para obtener un valor preciso, manteniendo toda la información difusa hasta el último paso \parencite{peregrin2000integracion}.
+
+Para el proceso de desfuzzificación, en el estudio no se concreta de manera explícita el método utilizado, pero es muy probable que se haya empleado el método \textit{centroide}, también conocido como centro de gravedad, ya que es uno de los más comunes asociados al método Mamdani tradicional. 
+
+Esta técnica calcula el punto medio del área bajo la curva del conjunto difuso resultante. Matemáticamente (\autoref{fig:centroide}), se obtiene como el cociente entre: la suma ponderada de todos los valores de salida posibles ($z$) en el rango del conjunto difuso (cuánto contribuye cada valor $z$ al equilibrio general) y la suma total de los grados de pertenencia ($C(z)$) en el conjunto difuso.
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.23\textwidth]{imgs/centroide.JPG}
+	\caption{Fórmula para calcular el centroide \parencite{klir1996fuzzy}.}
+	\label{fig:centroide}
+\end{figure}
 
 \subsection{Pruebas en simuladores y entornos reales}
 
