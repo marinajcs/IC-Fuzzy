@@ -95,20 +95,39 @@ Así, a diferencia de los otros dos sistemas que se centran en un conjunto más 
 	\label{fig:fuzzy-inference-system-diagram}
 \end{figure}
 
-En este estudio se han utilizado funciones de pertenencia triangulares para las salidas y trapezoidales para algunas entradas. Se muestra un ejemplo en la \autoref{fig:fuzzy-2-membership-lassitude-freshness}. 
+En este estudio se han utilizado funciones de pertenencia tanto triangulares como trapezoidales, como bien muestra el ejemplo de la \autoref{fig:fis-functions}. 
 
 \begin{figure}[H]
 	\centering
-	\includegraphics[width=0.5\textwidth]{imgs/fuzzy-2-membership-lassitude-freshness.JPG}
-	\caption{Funciones de pertenencia de la fatiga y frescura \parencite{jablonski2018fuzzy}.}
-	\label{fig:fuzzy-2-membership-lassitude-freshness}
+	\includegraphics[width=0.5\textwidth]{imgs/fis-functions.JPG}
+	\caption{Funciones de pertenencia del confort térmico \parencite{jablonski2018fuzzy}.}
+	\label{fig:fis-functions}
 \end{figure}
 
 Además, este sistema destaca por implementar un módulo de inferencia en \textit{LabVIEW}, diseñando desde cero los bloques de fuzzificación, inferencia y defuzzificación, mientras que en otros estudios se utilizaron herramientas estándar o adaptaciones de controladores PID.
 
 \subsubsection{Pruebas}
 
-Las pruebas en este sistema se realizaron en un entorno real, con mediciones de confort en diferentes condiciones, incluyendo variaciones en ocupación y ventilación en múltiples escenarios. 
+Las pruebas en este sistema se realizaron en un entorno real, con mediciones de confort en diferentes condiciones, incluyendo variaciones en ocupación y ventilación en múltiples escenarios.
+
+Además, lo que le hace destacar del resto es que se tuvieron en cuenta eventos como la presencia de personas o alimentos, en lugar de una habitación cerrada y controlada. La tabla de la \autoref{fig:fis-events} muestra los eventos registrados durante las primeras mediciones del experimento, mientras que las gráficas en la \autoref{fig:fis-output-waveforms} reflejan cómo estos eventos influyen en los índices de confort ambiental, donde subidas en los valores de la tabla indican mayores niveles de alerta o incomodidad.
+
+Por ejemplo, el inicio de una comida en el minuto 22 genera un empeoramiento en la frescura del aire, representada como una leve rampa ascendente en la gráfica, mientras que la apertura de una rejilla de ventilación en la ventana (minuto 182) produce una mejora general en todas las métricas, especialmente en la frescura del aire, lo que tiene sentido ya que permite la renovación del aire del interior.
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.7\textwidth]{imgs/fis-events.JPG}
+	\caption{Eventos durante las primeras mediciones \parencite{jablonski2018fuzzy}.}
+	\label{fig:fis-events}
+\end{figure}
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.7\textwidth]{imgs/fis-output-waveforms.JPG}
+	\caption{Formas de onda de los índices de confort \parencite{jablonski2018fuzzy}.}
+	\label{fig:fis-output-waveforms}
+\end{figure}
+
 
 Durante las pruebas, se realizaron encuestas para validar los índices calculados por el sistema, permitiendo alinear las percepciones humanas con las salidas del sistema y obteniendo una alta concordancia entre ambas. El enfoque anterior no está presente en los otros dos estudios, donde la validación se centró más en la comparación con sistemas tradicionales o en el análisis de la eficiencia energética.
 
@@ -125,9 +144,9 @@ En la \autoref{fig:fuzzy-inference-system-results}, se comparan las salidas del 
 
 Este enfoque destaca por la detección de eventos específicos como la presencia de alimentos o cambios en la ocupación. De esta forma, este sistema amplía el rango de variables monitoreadas y evaluadas, proporcionando una evaluación más centrada en todo aquello que define IEQ.
 
-Como ventajas adicionales, dividir un sistema difuso en subsistemas reduce drásticamente la complejidad al evitar el crecimiento exponencial ($n^m$, siendo $n$ es el número de valores de entrada y $m$ el número de entradas) de reglas que ocurriría en un sistema unificado, donde cada entrada y sus combinaciones requieren cobertura. Esto hace que el diseño sea más manejable y ajustable. Además, la modularidad permite mejorar o expandir cada subsistema de forma independiente, sin afectar al resto; por ejemplo, al añadir un nuevo sensor solo se ajusta el subsistema correspondiente. También mejora la eficiencia computacional, ya que cada subsistema realiza cálculos más simples, permitiendo respuestas rápidas a los cambios ambientales.
+Como ventajas adicionales, Dividir un sistema difuso en subsistemas reduce significativamente la complejidad al evitar el crecimiento exponencial de reglas ($n^m$, siendo $n$ es el número de valores de entrada y $m$ el número de entradas), haciéndolo más manejable y ajustable. La modularidad facilita mejoras y expansiones independientes, como la incorporación de nuevos sensores. Además, mejora la eficiencia computacional al permitir cálculos más simples y rápidas respuestas a cambios ambientales.
 
-Aunque dividir un sistema difuso en subsistemas ofrece claras ventajas, también puede presentar algunas desventajas en comparación con el enfoque unificado. Una de las principales limitaciones es la pérdida de interacción directa entre todas las variables de entrada. Al segmentar las entradas en módulos, las interacciones complejas que podrían influir en el resultado general pueden no ser capturadas de manera precisa, ya que cada subsistema procesa solo un subconjunto de las variables. Además, requiere una fase adicional de integración para combinar las salidas de los subsistemas en un resultado global, lo que puede introducir incertidumbre o simplificaciones adicionales. Finalmente, aunque se reduce la complejidad computacional, un sistema unificado podría ser más eficiente en aplicaciones donde el hardware es suficientemente potente, ya que permite procesar todas las combinaciones posibles en una sola etapa sin necesidad de combinar resultados.
+Aunque dividir un sistema difuso en subsistemas ofrece claras ventajas, también puede presentar algunas desventajas. Una de ellas es la pérdida de interacción directa entre todas las variables de entrada, lo que puede limitar la precisión en interacciones complejas. También requiere integrar las salidas de los subsistemas, introduciendo incertidumbre o simplificaciones adicionales. Por otro lado, un sistema unificado podría ser más eficiente en hardware potente, ya que procesa todas las combinaciones en una sola etapa.
 
 \subsection{Comparaciones entre los tres estudios}
 
