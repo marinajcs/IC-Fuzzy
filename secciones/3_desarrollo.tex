@@ -98,9 +98,9 @@ La base de conocimiento del FLC incluye:
 
 El motor de inferencia aplica el método \textit{Mamdani Max-Min} para combinar reglas y calcular las salidas. 
 
-Como se ha visto antes, cada regla difusa tiene una condición (\textit{IF}) y una conclusión (\textit{THEN}). Para combinar las condiciones de entrada (los valores medidos por los sensores) con los antecedentes de las reglas, se usa el operador "min" (intersección). Esto calcula el grado de cumplimiento de la regla considerando las funciones de pertenencia de las entradas (en este caso, las funciones trapezoidales que traducen los valores crisp a difusos).
+Como se ha visto antes, cada regla difusa tiene una condición (\textit{IF}) y una conclusión (\textit{THEN}). Para combinar las condiciones de entrada (los valores medidos por los sensores) con los antecedentes de las reglas, se usa el operador \textit{min} (intersección). Esto calcula el grado de cumplimiento de la regla considerando las funciones de pertenencia de las entradas (en este caso, las funciones trapezoidales que traducen los valores crisp a difusos).
 
-Luego, para combinar las salidas de varias reglas activadas, se usa el operador "max" (unión), generando así el conjunto difuso de salida que representa las conclusiones de todas las reglas activadas.
+Luego, para combinar las salidas de varias reglas activadas, se usa el operador \textit{max} (unión), generando así el conjunto difuso de salida que representa las conclusiones de todas las reglas activadas.
 
 \begin{figure}[H]
 	\centering
@@ -136,7 +136,7 @@ Dicho simulador permite definir rangos de confort, ingresar valores de las condi
 
 El simulador contiene tres paneles, asociados a tres elementos distintos:
 \begin{enumerate}
-	\item \textbf{Los rangos de confort}: este panel permite definir los intervalos de confort que utilizará el controlador para sus reglas difusas. Por ejemplo, se pueden establecer valores específicos para las etiquetas ("baja", "media" y "alta") de humedad o temperatura.
+	\item \textbf{Los rangos de confort}: este panel permite definir los intervalos de confort que utilizará el controlador para sus reglas difusas. Por ejemplo, se pueden establecer valores específicos para las etiquetas (baja, media y alta) de humedad o temperatura.
 	
 	\begin{figure}[H]
 		\centering
