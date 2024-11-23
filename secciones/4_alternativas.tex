@@ -27,7 +27,6 @@ El WMC-SSGA comienza con la generación de una población inicial dentro de unos
 
 El método anterior contrasta con el FLC unificado, que carece de capacidades de autoajuste y depende únicamente de reglas definidas por expertos.
 
-
 El controlador difuso presenta una estructura jerárquica, diseñada para procesar múltiples variables y tomar decisiones complejas optimizando el rendimiento del sistema HVAC. Esta estructura se organiza en módulos jerárquicos, donde cada nivel se encarga de tareas específicas y alimenta al siguiente. Se muestra un ejemplo en la \autoref{fig:fuzzy-genetics-functions}.
 
 En la primera capa, se procesan variables básicas como las entradas del índice de control térmico (\textit{PMV}), el valor del PMV anterior (\textit{PMV t-1}), la diferencia entre la temperatura exterior y la interior (\textit{Tout-Tin}) y la posición de la válvula antes del ajuste (\textit{Valve old position}). 
@@ -68,6 +67,8 @@ Se llevaron a cabo experimentos tanto en simulaciones como en entornos reales. L
 Al igual que el controlador difuso unificado, los resultados de este estudio mostraron mejoras significativas en comparación con los controladores tradicionales.
 
 En términos de eficiencia energética, en este estudio se lograron ahorros de hasta un 20\% en algunos casos gracias al uso de algoritmos genéticos, mientras que los parámetros de confort se mantuvieron dentro de los rangos deseados con fluctuaciones mínimas. Estos resultados sugieren que la integración de técnicas avanzadas de optimización puede potenciar aún más la eficacia de los controladores difusos.
+
+En comparación con el FLC unificado, este permite la optimización automática de funciones de pertenencia y reglas, logrando un mayor desempeño en el balance entre eficiencia energética y confort, y es altamente escalable para sistemas complejos con múltiples variables y reglas. No obstante, supone una mayor complejidad computacional, su configuración inicial es más costosa y algunos ajusten pueden requerir reentrenamiento con los algoritmos genéticos.
 
 \subsection{Sistema de inferencia difusa centrado en la evaluación de IEQ}
 
@@ -142,8 +143,8 @@ Las comparaciones entre FLCs diseñados se han realizado en base a cinco aspecto
 		
 		\textbf{Variables controladas} & 
 		Temperatura, humedad, CO2, iluminación & 
-		Temperatura, humedad, con optimización dinámica & 
-		Temperatura, humedad, CO2, iluminación, ruido, olores \\ \hline
+		Temperatura, humedad, CO2, consumo energético... & 
+		Temperatura, humedad, CO2, iluminación, ruido, olores... \\ \hline
 		
 		\textbf{Enfoque metodológico} & 
 		Controlador difuso clásico con reglas definidas por expertos. FLC supervisa PIDs para HVAC & 
@@ -162,7 +163,7 @@ Las comparaciones entre FLCs diseñados se han realizado en base a cinco aspecto
 		
 		\textbf{Aplicación recomendada} & 
 		Escenarios con reglas de confort bien definidas, simplicidad y robustez & 
-		Entornos donde se requiere máxima eficiencia energética y adaptabilidad & 
+		Entornos donde se requiere máxima eficiencia energética y optimización precisa & 
 		Edificios donde la percepción humana del confort es crítica \\ \hline
 	\end{tabular}
 	\caption{Comparación de tres estudios sobre controladores difusos para IEQ.}
